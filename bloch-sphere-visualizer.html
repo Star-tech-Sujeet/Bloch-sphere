@@ -171,11 +171,11 @@
 
   /* Current state display */
   #state-display {
-    margin: 20px 24px;
+    margin: 16px 24px 12px;
     background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
+    border: 1px solid var(--border2);
+    border-radius: 16px;
+    padding: 20px;
     position: relative;
     overflow: hidden;
   }
@@ -186,43 +186,85 @@
     top: 0; left: 0; right: 0;
     height: 2px;
     background: linear-gradient(90deg, var(--vec), var(--accent));
-    opacity: 0.7;
+    opacity: 0.85;
   }
 
-  .state-row {
+  /* Glow behind the dirac label */
+  #state-display::after {
+    content: '';
+    position: absolute;
+    top: 10px; left: 50%;
+    transform: translateX(-50%);
+    width: 120px; height: 60px;
+    background: radial-gradient(ellipse, rgba(79,255,176,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .state-header-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 14px;
   }
 
   .state-title {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--text3);
+    padding-top: 3px;
+  }
+
+  .state-prob-pill {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--vec);
+    background: rgba(79,255,176,0.08);
+    border: 1px solid rgba(79,255,176,0.2);
+    border-radius: 20px;
+    padding: 2px 10px;
+  }
+
+  /* Big Dirac notation */
+  .state-dirac-wrap {
+    text-align: center;
+    margin-bottom: 18px;
   }
 
   .state-value {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 20px;
+    font-size: 36px;
     font-weight: 500;
     color: var(--vec);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    text-shadow: 0 0 24px rgba(79,255,176,0.3);
+    display: block;
   }
 
+  .state-sublabel {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* Amplitude row */
   .amplitude-row {
-    margin-top: 12px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px;
+    margin-bottom: 10px;
   }
 
   .amplitude-box {
     background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 12px;
+    border-radius: 10px;
+    padding: 10px 14px;
   }
 
   .amplitude-label {
@@ -230,13 +272,101 @@
     color: var(--text3);
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    margin-bottom: 3px;
+    margin-bottom: 5px;
   }
 
   .amplitude-val {
     font-family: 'IBM Plex Mono', monospace;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .amplitude-prob {
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 3px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* Probability bars inside amplitude boxes */
+  .amp-bar-track {
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 6px;
+    overflow: hidden;
+  }
+
+  .amp-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .amp-bar-fill.alpha { background: var(--accent); }
+  .amp-bar-fill.beta  { background: var(--pink); }
+
+  /* Bloch XYZ row */
+  .bloch-xyz-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .xyz-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    text-align: center;
+  }
+
+  .xyz-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .xyz-label.x { color: #f87171; }
+  .xyz-label.y { color: #34d399; }
+  .xyz-label.z { color: #5b8dee; }
+
+  .xyz-val {
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
     color: var(--text2);
+  }
+
+  /* Magnitude bar (inside card now) */
+  .state-bar-wrap { margin-top: 2px; }
+
+  .state-bar-label {
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .state-bar-track {
+    height: 4px;
+    background: var(--bg);
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .state-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--vec));
+    border-radius: 3px;
+    transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
   }
 
   /* Section headers */
@@ -417,83 +547,154 @@
   #history-list {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    max-height: 180px;
+    gap: 0;
+    max-height: 320px;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
   }
 
-  .history-item {
+  #history-list::-webkit-scrollbar { width: 3px; }
+  #history-list::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  /* Timeline wrapper — each row + its connector line */
+  .history-row {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 10px;
-    background: var(--bg3);
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    animation: slide-in 0.2s ease-out;
+    align-items: stretch;
+    gap: 0;
+    animation: slide-in 0.22s cubic-bezier(0.34,1.56,0.64,1);
   }
 
   @keyframes slide-in {
-    from { opacity: 0; transform: translateX(8px); }
-    to   { opacity: 1; transform: translateX(0); }
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
-  .history-gate {
+  /* Left timeline column */
+  .history-timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 28px;
+    flex-shrink: 0;
+    padding-top: 14px;
+  }
+
+  .history-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 2px solid var(--gate-c, var(--text3));
+    background: var(--bg2);
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .history-row.latest .history-dot {
+    background: var(--gate-c, var(--accent));
+    box-shadow: 0 0 6px var(--gate-c, var(--accent));
+  }
+
+  .history-line {
+    width: 1px;
+    flex: 1;
+    background: var(--border);
+    margin-top: 4px;
+  }
+
+  /* Card */
+  .history-item {
+    flex: 1;
+    margin: 4px 0 4px 0;
+    padding: 10px 12px;
+    background: var(--bg3);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s;
+    min-width: 0;
+  }
+
+  .history-row.latest .history-item {
+    border-color: var(--border2);
+    background: var(--bg2);
+  }
+
+  /* Top row: step number + gate badge + LAST badge */
+  .history-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 7px;
+  }
+
+  .history-step {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    min-width: 18px;
+  }
+
+  .history-gate-badge {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
-    font-weight: 500;
-    min-width: 28px;
-    color: var(--gate-c);
+    font-weight: 600;
+    color: var(--bg);
+    background: var(--gate-c, var(--accent));
+    border-radius: 5px;
+    padding: 1px 7px;
+    letter-spacing: 0.04em;
+  }
+
+  .history-last-badge {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--vec);
+    border: 1px solid rgba(79,255,176,0.35);
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin-left: auto;
+  }
+
+  /* Flow: from-state → to-state */
+  .history-flow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .history-from {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text3);
+    white-space: nowrap;
   }
 
   .history-arrow {
-    color: var(--text3);
     font-size: 11px;
+    color: var(--gate-c, var(--text3));
+    opacity: 0.7;
   }
 
-  .history-state {
+  .history-to {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--text2);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .history-row.latest .history-to {
+    color: var(--vec);
   }
 
   .history-empty {
     font-size: 12px;
     color: var(--text3);
-    padding: 12px 0;
-  }
-
-  /* Bloch vector magnitude bar */
-  #vec-bar-wrap {
-    margin: 0 24px 8px;
-    padding: 0;
-  }
-
-  .bar-label {
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .bar-track {
-    height: 3px;
-    background: var(--bg);
-    border-radius: 2px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-  }
-
-  .bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--vec));
-    border-radius: 2px;
-    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 16px 0 8px 28px;
+    font-style: italic;
   }
 
   /* Responsive */
@@ -534,29 +735,53 @@
 
     <!-- State display -->
     <div id="state-display">
-      <div class="state-row">
+      <div class="state-header-row">
         <div class="state-title">Current State</div>
-        <div class="state-value" id="dirac-state">|0⟩</div>
+        <div class="state-prob-pill" id="state-type-pill">pure state</div>
       </div>
+
+      <div class="state-dirac-wrap">
+        <span class="state-value" id="dirac-state">|0⟩</span>
+        <div class="state-sublabel" id="state-coords-card">θ = 0.0° · φ = 0.0°</div>
+      </div>
+
       <div class="amplitude-row">
         <div class="amplitude-box">
           <div class="amplitude-label">α · |0⟩</div>
           <div class="amplitude-val" id="amp0">1.000</div>
+          <div class="amplitude-prob" id="prob0">P = 100%</div>
+          <div class="amp-bar-track"><div class="amp-bar-fill alpha" id="amp-bar0" style="width:100%"></div></div>
         </div>
         <div class="amplitude-box">
           <div class="amplitude-label">β · |1⟩</div>
           <div class="amplitude-val" id="amp1">0.000</div>
+          <div class="amplitude-prob" id="prob1">P = 0%</div>
+          <div class="amp-bar-track"><div class="amp-bar-fill beta" id="amp-bar1" style="width:0%"></div></div>
         </div>
       </div>
-    </div>
 
-    <!-- Vector bar -->
-    <div id="vec-bar-wrap">
-      <div class="bar-label">
-        <span>Bloch vector</span>
-        <span id="vec-magnitude">|r| = 1.000</span>
+      <div class="bloch-xyz-row">
+        <div class="xyz-box">
+          <div class="xyz-label x">X</div>
+          <div class="xyz-val" id="bloch-x">0.000</div>
+        </div>
+        <div class="xyz-box">
+          <div class="xyz-label y">Y</div>
+          <div class="xyz-val" id="bloch-y">0.000</div>
+        </div>
+        <div class="xyz-box">
+          <div class="xyz-label z">Z</div>
+          <div class="xyz-val" id="bloch-z">1.000</div>
+        </div>
       </div>
-      <div class="bar-track"><div class="bar-fill" id="vec-bar" style="width:100%"></div></div>
+
+      <div class="state-bar-wrap">
+        <div class="state-bar-label">
+          <span>Bloch vector magnitude</span>
+          <span id="vec-magnitude">|r| = 1.000</span>
+        </div>
+        <div class="state-bar-track"><div class="state-bar-fill" id="vec-bar" style="width:100%"></div></div>
+      </div>
     </div>
 
     <!-- Pauli gates -->
@@ -631,7 +856,7 @@
     </div>
 
     <!-- History -->
-    <div class="section-header">Gate History</div>
+    <div class="section-header" id="history-header">Gate History</div>
     <div id="history-panel">
       <div id="history-list">
         <div class="history-empty">No gates applied yet.</div>
@@ -1046,10 +1271,11 @@ function applyGate(name) {
   info.textContent = `${gate.label} gate — rotate ${deg}° around ${gate.axis}`;
   setTimeout(() => { info.style.opacity = '0'; }, 2000);
 
-  // Update history
+  // Update history (capture from-state before applying)
+  const fromState = getDiracLabel(oldQubit);
   const stateLabel = getDiracLabel(qubit);
-  gateHistory.unshift({ gate: gate.label, state: stateLabel, color: gate.color });
-  if (gateHistory.length > 12) gateHistory.pop();
+  gateHistory.unshift({ gate: gate.label, fromState, state: stateLabel, color: gate.color });
+  if (gateHistory.length > 20) gateHistory.pop();
   renderHistory();
 
   // Update UI
@@ -1058,44 +1284,92 @@ function applyGate(name) {
 
 function updateUI() {
   const { x, y, z } = blochFromQubit(qubit);
-  
+
   // State labels
   const label = getDiracLabel(qubit);
   document.getElementById('dirac-state').textContent = label;
   document.getElementById('state-label').textContent = label;
-  
-  // Angles
-  const theta = Math.acos(Math.max(-1,Math.min(1, z))) * 180 / Math.PI;
+
+  // Angles (in card and in HUD)
+  const theta = Math.acos(Math.max(-1, Math.min(1, z))) * 180 / Math.PI;
   const phi   = Math.atan2(y, x) * 180 / Math.PI;
-  document.getElementById('state-coords').textContent = 
-    `θ = ${theta.toFixed(1)}° · φ = ${phi.toFixed(1)}°`;
-  
-  // Amplitudes
+  const coordStr = `θ = ${theta.toFixed(1)}° · φ = ${phi.toFixed(1)}°`;
+  document.getElementById('state-coords').textContent = coordStr;
+  document.getElementById('state-coords-card').textContent = coordStr;
+
+  // Amplitudes + probabilities + bars
   const [ar, ai, br, bi] = qubit;
-  const alpha = Math.sqrt(ar*ar+ai*ai);
-  const beta  = Math.sqrt(br*br+bi*bi);
+  const alpha = Math.sqrt(ar*ar + ai*ai);
+  const beta  = Math.sqrt(br*br + bi*bi);
+  const pAlpha = (alpha * alpha * 100);
+  const pBeta  = (beta  * beta  * 100);
   document.getElementById('amp0').textContent = alpha.toFixed(3);
   document.getElementById('amp1').textContent = beta.toFixed(3);
-  
-  // Bloch vector magnitude
-  const mag = Math.sqrt(x*x+y*y+z*z);
+  document.getElementById('prob0').textContent = `P = ${pAlpha.toFixed(1)}%`;
+  document.getElementById('prob1').textContent = `P = ${pBeta.toFixed(1)}%`;
+  document.getElementById('amp-bar0').style.width = pAlpha.toFixed(1) + '%';
+  document.getElementById('amp-bar1').style.width = pBeta.toFixed(1) + '%';
+
+  // Bloch XYZ
+  document.getElementById('bloch-x').textContent = x.toFixed(3);
+  document.getElementById('bloch-y').textContent = y.toFixed(3);
+  document.getElementById('bloch-z').textContent = z.toFixed(3);
+
+  // Magnitude bar
+  const mag = Math.sqrt(x*x + y*y + z*z);
   document.getElementById('vec-magnitude').textContent = `|r| = ${mag.toFixed(3)}`;
   document.getElementById('vec-bar').style.width = (mag * 100).toFixed(1) + '%';
+
+  // State type pill
+  const name = getStateName(qubit);
+  const pill = document.getElementById('state-type-pill');
+  if (name === 'custom') {
+    pill.textContent = 'superposition';
+    pill.style.color = 'var(--amber)';
+    pill.style.background = 'rgba(251,191,36,0.08)';
+    pill.style.borderColor = 'rgba(251,191,36,0.2)';
+  } else {
+    pill.textContent = 'basis state';
+    pill.style.color = 'var(--vec)';
+    pill.style.background = 'rgba(79,255,176,0.08)';
+    pill.style.borderColor = 'rgba(79,255,176,0.2)';
+  }
 }
 
 function renderHistory() {
   const list = document.getElementById('history-list');
+  const header = document.getElementById('history-header');
   if (gateHistory.length === 0) {
+    header.textContent = 'Gate History';
     list.innerHTML = '<div class="history-empty">No gates applied yet.</div>';
     return;
   }
-  list.innerHTML = gateHistory.map(h => `
-    <div class="history-item">
-      <span class="history-gate" style="--gate-c:${h.color}">${h.gate}</span>
-      <span class="history-arrow">→</span>
-      <span class="history-state">${h.state}</span>
-    </div>
-  `).join('');
+  header.textContent = `Gate History · ${gateHistory.length} step${gateHistory.length > 1 ? 's' : ''}`;
+  const total = gateHistory.length;
+  list.innerHTML = gateHistory.map((h, i) => {
+    const stepNum = total - i;
+    const isLatest = i === 0;
+    const hasLine = i < total - 1;
+    return `
+    <div class="history-row${isLatest ? ' latest' : ''}" style="--gate-c:${h.color}">
+      <div class="history-timeline">
+        <div class="history-dot"></div>
+        ${hasLine ? '<div class="history-line"></div>' : ''}
+      </div>
+      <div class="history-item">
+        <div class="history-top">
+          <span class="history-step">#${stepNum}</span>
+          <span class="history-gate-badge">${h.gate}</span>
+          ${isLatest ? '<span class="history-last-badge">latest</span>' : ''}
+        </div>
+        <div class="history-flow">
+          <span class="history-from">${h.fromState}</span>
+          <span class="history-arrow">→</span>
+          <span class="history-to">${h.state}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 // ── Reset & preset states ─────────────────────────────
